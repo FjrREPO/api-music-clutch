@@ -1,0 +1,12 @@
+{
+  "track_names": [
+    "die with a smile.mp3",
+    "golden hour.mp3",
+    "sadrah.mp3"
+  ],
+  "label_mapping": {
+    "die with a smile.mp3": 0,
+    "golden hour.mp3": 1,
+    "sadrah.mp3": 2
+  }
+}
