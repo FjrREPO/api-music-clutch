@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import tensorflow as tf
 import librosa
 import json
 from flask import Flask, request, jsonify
@@ -8,6 +7,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from typing import List, Dict
 import logging
+from tensorflow import keras
 
 
 class AudioMatcher:
@@ -17,7 +17,7 @@ class AudioMatcher:
         track_names_path="./data/track_names.json",
     ):
         # Load pre-trained model
-        self.model = tf.keras.models.load_model(model_path)
+        self.model = keras.models.load_model(model_path)
 
         # Load track names and label mapping
         with open(track_names_path, "r") as f:
