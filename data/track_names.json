@@ -1,12 +1,1 @@
-{
-  "track_names": [
-    "die with a smile.mp3",
-    "golden hour.mp3",
-    "sadrah.mp3"
-  ],
-  "label_mapping": {
-    "die with a smile.mp3": 0,
-    "golden hour.mp3": 1,
-    "sadrah.mp3": 2
-  }
-}
+{"track_names": ["Die With A Smile - Lady Gaga & Bruno Mars.mp3", "Impossible - James Arthur.mp3", "Sadrah - For Revenge.mp3", "Sick Feeling - boy pablo.mp3", "Thick Of It (feat. Trippie Redd) - KSI.mp3", "When I Was Your Man - Bruno Mars.mp3", "golden hour - JVKE.mp3"], "label_mapping": {"Die With A Smile - Lady Gaga & Bruno Mars.mp3": 0, "Impossible - James Arthur.mp3": 1, "Sadrah - For Revenge.mp3": 2, "Sick Feeling - boy pablo.mp3": 3, "Thick Of It (feat. Trippie Redd) - KSI.mp3": 4, "When I Was Your Man - Bruno Mars.mp3": 5, "golden hour - JVKE.mp3": 6}}
