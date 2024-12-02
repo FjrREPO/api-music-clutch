@@ -2,12 +2,25 @@ import os
 import numpy as np
 import librosa
 import json
+import sys
+import logging
+
+# Explicitly handle TensorFlow and Keras import
+try:
+    import tensorflow as tf
+    from tensorflow import keras
+except ImportError:
+    print("TensorFlow or Keras import failed. Attempting alternative import.")
+    try:
+        import keras
+    except ImportError:
+        print("Could not import Keras. Please check your installation.")
+        sys.exit(1)
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from typing import List, Dict
-import logging
-import tensorflow as tf
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -22,9 +35,19 @@ class AudioMatcher:
         # Configure TensorFlow logging
         tf.get_logger().setLevel('ERROR')
         
-        # Load pre-trained model with error handling
+        # Load pre-trained model with enhanced error handling
         try:
-            self.model = tf.keras.models.load_model(model_path)
+            # Try multiple import methods
+            try:
+                self.model = tf.keras.models.load_model(model_path)
+            except Exception as tf_load_error:
+                try:
+                    self.model = keras.models.load_model(model_path)
+                except Exception as keras_load_error:
+                    logging.error(f"Model loading failed. TensorFlow Error: {tf_load_error}")
+                    logging.error(f"Keras Error: {keras_load_error}")
+                    raise RuntimeError("Could not load the model using TensorFlow or Keras")
+
         except Exception as e:
             logging.error(f"Failed to load model: {e}")
             raise
@@ -91,7 +114,12 @@ class AudioMatcher:
         fingerprint_input = fingerprint.reshape(1, -1)
 
         # Predict probabilities
-        predictions = self.model.predict(fingerprint_input)[0]
+        # Use the appropriate prediction method based on available library
+        try:
+            predictions = self.model.predict(fingerprint_input)[0]
+        except Exception as e:
+            logging.error(f"Prediction failed: {e}")
+            raise
 
         # Sort matches by probability in descending order
         sorted_indices = np.argsort(predictions)[::-1]
